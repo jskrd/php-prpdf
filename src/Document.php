@@ -1,0 +1,72 @@
+<?php
+
+namespace Jskrd\PrintReadyPDF;
+
+final class Document
+{
+    private $pageWidth; // mm
+
+    private $pageHeight; // mm
+
+    private $dotsPerCentimeter;
+
+    private $bleedSize = 3; // mm
+
+    private $cropMarksLength = 5; // mm
+
+    private $cropMarksWeight = .1; // mm
+
+    private $cropMarksOffset = 2; // mm
+
+    public function __construct(int $pageWidth, int $pageHeight, float $dpcm)
+    {
+        $this->pageWidth = $pageWidth;
+        $this->pageHeight = $pageHeight;
+        $this->dotsPerCentimeter = $dpcm;
+    }
+
+    public function getPageWidth(): int
+    {
+        return $this->pageWidth;
+    }
+
+    public function getPageHeight(): int
+    {
+        return $this->pageHeight;
+    }
+
+    public function getDotsPerCentimeter(): float
+    {
+        return $this->dotsPerCentimeter;
+    }
+
+    public function getDotsPerMillimeter(): float
+    {
+        return round($this->dotsPerCentimeter / 10, 8);
+    }
+
+    public function getDotsPerInch(): float
+    {
+        return round($this->dotsPerCentimeter * 2.54, 8);
+    }
+
+    public function getBleedSize(): float
+    {
+        return $this->bleedSize;
+    }
+
+    public function getCropMarksLength(): float
+    {
+        return $this->cropMarksLength;
+    }
+
+    public function getCropMarksWeight(): float
+    {
+        return $this->cropMarksWeight;
+    }
+
+    public function getCropMarksOffset(): float
+    {
+        return $this->cropMarksOffset;
+    }
+}
