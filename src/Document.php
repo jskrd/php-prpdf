@@ -87,4 +87,28 @@ final class Document
     {
         return $this->pageHeight + $this->getSlugSize() * 2;
     }
+
+    public function getBleedBoxWidth(): float
+    {
+        return $this->pageWidth + $this->bleedSize * 2;
+    }
+
+    public function getBleedBoxHeight(): float
+    {
+        return $this->pageHeight + $this->bleedSize * 2;
+    }
+
+    public function getBleedBoxResolutionX(): int
+    {
+        return round(
+            $this->getBleedBoxWidth() * $this->getDotsPerMillimeter()
+        );
+    }
+
+    public function getBleedBoxResolutionY(): int
+    {
+        return round(
+            $this->getBleedBoxHeight() * $this->getDotsPerMillimeter()
+        );
+    }
 }

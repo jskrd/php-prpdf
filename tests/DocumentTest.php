@@ -88,4 +88,32 @@ class DocumentTest extends TestCase
 
         $this->assertSame(311, $document->getPaperHeight());
     }
+
+    public function testGetBleedBoxWidth()
+    {
+        $document = new Document(210, 297, 118.11023622);
+
+        $this->assertSame(216.0, $document->getBleedBoxWidth());
+    }
+
+    public function testGetBleedBoxHeight()
+    {
+        $document = new Document(210, 297, 118.11023622);
+
+        $this->assertSame(303.0, $document->getBleedBoxHeight());
+    }
+
+    public function testGetBleedBoxResolutionX()
+    {
+        $document = new Document(210, 297, 118.11023622);
+
+        $this->assertSame(2551, $document->getBleedBoxResolutionX());
+    }
+
+    public function testGetBleedBoxResolutionY()
+    {
+        $document = new Document(210, 297, 118.11023622);
+
+        $this->assertSame(3579, $document->getBleedBoxResolutionY());
+    }
 }
