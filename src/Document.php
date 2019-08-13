@@ -69,4 +69,22 @@ final class Document
     {
         return $this->cropMarksOffset;
     }
+
+    public function getSlugSize(): int
+    {
+        $cropMarks = $this->cropMarksOffset + $this->cropMarksLength;
+        $bleed = $this->bleedSize;
+
+        return ceil($cropMarks > $bleed ? $cropMarks : $bleed);
+    }
+
+    public function getPaperWidth(): int
+    {
+        return $this->pageWidth + $this->getSlugSize() * 2;
+    }
+
+    public function getPaperHeight(): int
+    {
+        return $this->pageHeight + $this->getSlugSize() * 2;
+    }
 }
