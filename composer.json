@@ -12,10 +12,5 @@
         "psr-4": {
             "Jskrd\\PrintReadyPDF\\": "src/"
         }
-    },
-    "autoload-dev": {
-        "psr-4": {
-            "Tests\\": "tests/"
-        }
     }
 }
