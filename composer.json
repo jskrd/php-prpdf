@@ -3,7 +3,8 @@
     "description": "",
     "license": "MIT",
     "require": {
-        "php": "^7.1"
+        "php": "^7.1",
+        "ext-imagick": "*"
     },
     "require-dev": {
         "phpunit/phpunit": "^7"
