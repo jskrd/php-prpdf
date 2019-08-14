@@ -2,6 +2,8 @@
 
 namespace Jskrd\PrintReadyPDF;
 
+use Jskrd\PrintReadyPDF\Page;
+
 final class Document
 {
     private $pageWidth; // mm
@@ -17,6 +19,8 @@ final class Document
     private $cropMarksWeight = .1; // mm
 
     private $cropMarksOffset = 2; // mm
+
+    private $pages = [];
 
     public function __construct(int $pageWidth, int $pageHeight, float $dpcm)
     {
@@ -110,5 +114,17 @@ final class Document
         return round(
             $this->getBleedBoxHeight() * $this->getDotsPerMillimeter()
         );
+    }
+
+    public function getPages(): array
+    {
+        return $this->pages;
+    }
+
+    public function addPage(Page $page): Document
+    {
+        $this->pages[] = $page;
+
+        return $this;
     }
 }

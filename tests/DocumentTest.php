@@ -1,6 +1,7 @@
 <?php
 
 use Jskrd\PrintReadyPDF\Document;
+use Jskrd\PrintReadyPDF\Page;
 use PHPUnit\Framework\TestCase;
 
 class DocumentTest extends TestCase
@@ -115,5 +116,23 @@ class DocumentTest extends TestCase
         $document = new Document(210, 297, 118.11023622);
 
         $this->assertSame(3579, $document->getBleedBoxResolutionY());
+    }
+
+    public function testGetPages()
+    {
+        $document = new Document(210, 297, 118.11023622);
+
+        $this->assertSame([], $document->getPages());
+    }
+
+    public function testAddPage()
+    {
+        $document = new Document(210, 297, 118.11023622);
+
+        $page = new Page($document);
+
+        $document->addPage($page);
+
+        $this->assertSame([$page], $document->getPages());
     }
 }
