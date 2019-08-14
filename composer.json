@@ -5,7 +5,8 @@
     "require": {
         "php": "^7.1",
         "ext-imagick": "*",
-        "dompdf/dompdf": "^0.8.3"
+        "dompdf/dompdf": "^0.8.3",
+        "twig/twig": "^2.0"
     },
     "require-dev": {
         "phpunit/phpunit": "^7"
