@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <style>
+            @page {
+                margin: 0;
+                size: {{ paperWidth }}mm {{ paperHeight }}mm;
+            }
+
+            .page {
+                position: relative;
+                height: 100vh;
+                background-position: center;
+                background-repeat: no-repeat;
+                page-break-after: always;
+            }
+
+            .page > .crop-mark {
+                position: absolute;
+                border: {{ cropMarksWeight }}mm solid #FFFFFF;
+                background-color: #000000;
+            }
+
+            .page > .crop-mark.crop-mark-top-left,
+            .page > .crop-mark.crop-mark-top-right,
+            .page > .crop-mark.crop-mark-bottom-left,
+            .page > .crop-mark.crop-mark-bottom-right {
+                width: {{ cropMarksWeight }}mm;
+                height: {{ cropMarksLength }}mm;
+            }
+
+            .page > .crop-mark.crop-mark-left-top,
+            .page > .crop-mark.crop-mark-left-bottom,
+            .page > .crop-mark.crop-mark-right-top,
+            .page > .crop-mark.crop-mark-right-bottom {
+                width: {{ cropMarksLength }}mm;
+                height: {{ cropMarksWeight }}mm;
+            }
+
+            .page > .crop-mark.crop-mark-top-left,
+            .page > .crop-mark.crop-mark-top-right {
+                top: 0;
+            }
+
+            .page > .crop-mark.crop-mark-right-top,
+            .page > .crop-mark.crop-mark-right-bottom {
+                right: 0;
+            }
+
+            .page > .crop-mark.crop-mark-bottom-left,
+            .page > .crop-mark.crop-mark-bottom-right {
+                bottom: 0;
+            }
+
+            .page > .crop-mark.crop-mark-left-top,
+            .page > .crop-mark.crop-mark-left-bottom {
+                left: 0;
+            }
+
+            .page > .crop-mark.crop-mark-top-left,
+            .page > .crop-mark.crop-mark-bottom-left {
+                left: {{ (paperWidth - pageWidth) / 2 }}mm;
+            }
+
+            .page > .crop-mark.crop-mark-top-right,
+            .page > .crop-mark.crop-mark-bottom-right {
+                right: {{ (paperWidth - pageWidth) / 2 }}mm;
+            }
+
+            .page > .crop-mark.crop-mark-left-top,
+            .page > .crop-mark.crop-mark-right-top {
+                top: {{ (paperWidth - pageWidth) / 2 }}mm;
+            }
+
+            .page > .crop-mark.crop-mark-left-bottom,
+            .page > .crop-mark.crop-mark-right-bottom {
+                bottom: {{ (paperWidth - pageWidth) / 2 }}mm;
+            }
+        </style>
+    </head>
+    <body>
+        {%- for image in images -%}
+            <div class="page" style="background-image: url('data:image/jpeg;base64,{{ image }}');">
+                <div class="crop-mark crop-mark-top-left"></div>
+                <div class="crop-mark crop-mark-top-right"></div>
+                <div class="crop-mark crop-mark-right-top"></div>
+                <div class="crop-mark crop-mark-right-bottom"></div>
+                <div class="crop-mark crop-mark-bottom-right"></div>
+                <div class="crop-mark crop-mark-bottom-left"></div>
+                <div class="crop-mark crop-mark-left-bottom"></div>
+                <div class="crop-mark crop-mark-left-top"></div>
+            </div>
+        {%- endfor -%}
+    </body>
+</html>

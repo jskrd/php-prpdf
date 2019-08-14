@@ -2,7 +2,10 @@
 
 namespace Jskrd\PrintReadyPDF;
 
+use Dompdf\Dompdf;
 use Jskrd\PrintReadyPDF\Page;
+use Twig\Environment;
+use Twig\Loader\FilesystemLoader;
 
 final class Document
 {
@@ -126,5 +129,37 @@ final class Document
         $this->pages[] = $page;
 
         return $this;
+    }
+
+    public function render(): string
+    {
+        $twig = new Environment(new FilesystemLoader(__DIR__ . '/Templates'));
+
+        $images = [];
+        foreach ($this->pages as $page) {
+            $imagick = $page->getImage();
+            $imagick->setImageFormat('png');
+            $imagick->stripImage();
+
+            $images[] = base64_encode($imagick->getImageBlob());
+        }
+
+        $dompdf = new Dompdf();
+        $dompdf->set_option('dpi', $this->getDotsPerInch());
+        $dompdf->loadHtml(
+            $twig->render('document.html', [
+                'pageWidth' => $this->getPageWidth(),
+                'pageHeight' => $this->getPageHeight(),
+                'paperWidth' => $this->getPaperWidth(),
+                'paperHeight' => $this->getPaperHeight(),
+                'cropMarksLength' => $this->cropMarksLength,
+                'cropMarksWeight' => $this->cropMarksWeight,
+                'cropMarksOffset' => $this->cropMarksOffset,
+                'images' => $images
+            ])
+        );
+        $dompdf->render();
+
+        return $dompdf->output();
     }
 }
