@@ -133,16 +133,11 @@ final class Document
 
     public function render(): string
     {
-        $twig = new Environment(new FilesystemLoader(__DIR__ . '/Templates'));
-
         $images = [];
-        foreach ($this->pages as $page) {
-            $imagick = $page->getImage();
-            $imagick->setImageFormat('png');
-            $imagick->stripImage();
+        foreach ($this->pages as $page)
+            $images[] = base64_encode($page->render());
 
-            $images[] = base64_encode($imagick->getImageBlob());
-        }
+        $twig = new Environment(new FilesystemLoader(__DIR__ . '/Templates'));
 
         $dompdf = new Dompdf();
         $dompdf->set_option('dpi', $this->getDotsPerInch());
