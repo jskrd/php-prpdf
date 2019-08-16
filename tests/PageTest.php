@@ -29,24 +29,6 @@ class PageTest extends TestCase
         );
     }
 
-    public function testGetImageWidth()
-    {
-        $document = new Document(210, 297, 118.11023622);
-
-        $page = new Page($document);
-
-        $this->assertSame(2551, $page->getImageWidth());
-    }
-
-    public function testGetImageHeight()
-    {
-        $document = new Document(210, 297, 118.11023622);
-
-        $page = new Page($document);
-
-        $this->assertSame(3579, $page->getImageHeight());
-    }
-
     public function testAddLayerImage()
     {
         $document = new Document(105, 148, 118.11023622);

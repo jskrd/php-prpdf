@@ -26,16 +26,6 @@ final class Page
         return $this->image;
     }
 
-    public function getImageWidth(): int
-    {
-        return $this->image->getImageWidth();
-    }
-
-    public function getImageHeight(): int
-    {
-        return $this->image->getImageHeight();
-    }
-
     public function addImageLayer(string $image): Page
     {
         $imagick = new Imagick();
