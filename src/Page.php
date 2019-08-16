@@ -3,6 +3,7 @@
 namespace Jskrd\PrintReadyPDF;
 
 use Imagick;
+use ImagickPixel;
 
 final class Page
 {
@@ -10,12 +11,14 @@ final class Page
 
     public function __construct(Document $document)
     {
+        $width = $document->getBleedBoxResolutionX();
+        $height = $document->getBleedBoxResolutionY();
+        $dpcm = $document->getDotsPerCentimeter();
+
         $this->image = new Imagick();
-        $this->image->newImage(
-            $document->getBleedBoxResolutionX(),
-            $document->getBleedBoxResolutionY(),
-            '#FF00FF'
-        );
+        $this->image->newImage($width, $height, new ImagickPixel('#FF00FF'));
+        $this->image->setImageUnits(Imagick::RESOLUTION_PIXELSPERCENTIMETER);
+        $this->image->setImageResolution($dpcm, $dpcm);
     }
 
     public function getImage(): Imagick

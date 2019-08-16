@@ -2,6 +2,7 @@
 
 namespace Tests;
 
+use Imagick;
 use Jskrd\PrintReadyPDF\Document;
 use Jskrd\PrintReadyPDF\Page;
 use PHPUnit\Framework\TestCase;
@@ -14,7 +15,18 @@ class PageTest extends TestCase
 
         $page = new Page($document);
 
-        $this->assertSame('Imagick', get_class($page->getImage()));
+        $imagick = $page->getImage();
+
+        $this->assertSame(2551, $imagick->getImageWidth());
+        $this->assertSame(3579, $imagick->getImageHeight());
+        $this->assertSame(
+            Imagick::RESOLUTION_PIXELSPERCENTIMETER,
+            $imagick->getImageUnits()
+        );
+        $this->assertSame(
+            ['x' => 118.11023622, 'y' => 118.11023622],
+            $imagick->getImageResolution()
+        );
     }
 
     public function testGetImageWidth()
