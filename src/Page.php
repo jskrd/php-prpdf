@@ -16,9 +16,7 @@ final class Page
         $dpcm = $document->getDotsPerCentimeter();
 
         $this->image = new Imagick();
-        $this->image->newImage($width, $height, new ImagickPixel('#FF00FF'));
-        $this->image->setImageUnits(Imagick::RESOLUTION_PIXELSPERCENTIMETER);
-        $this->image->setImageResolution($dpcm, $dpcm);
+        $this->image->setImageFormat('png');
     }
 
     public function getImage(): Imagick
@@ -33,16 +31,18 @@ final class Page
 
         $this->image->addImage($imagick);
 
+        $this->image = $this->image->mergeImageLayers(
+            Imagick::LAYERMETHOD_FLATTEN
+        );
+
         return $this;
     }
 
     public function render(): string
     {
-        $imagick = $this->image->mergeImageLayers(Imagick::LAYERMETHOD_FLATTEN);
-        $imagick->setImageFormat('png');
-        $imagick->stripImage();
+        $this->image->stripImage();
 
-        return $imagick->getImageBlob();
+        return $this->image->getImageBlob();
     }
 
     public static function millimeterToCentimeter(float $mm): float
