@@ -9,6 +9,15 @@ use PHPUnit\Framework\TestCase;
 
 class PageTest extends TestCase
 {
+    public function testGetDocument()
+    {
+        $document = new Document(105, 148, 118.11023622);
+
+        $page = new Page($document);
+
+        $this->assertSame($document, $page->getDocument());
+    }
+
     public function testGetImage()
     {
         $document = new Document(105, 148, 118.11023622);
@@ -19,14 +28,6 @@ class PageTest extends TestCase
 
         $this->assertSame(1311, $imagick->getImageWidth());
         $this->assertSame(1819, $imagick->getImageHeight());
-        $this->assertSame(
-            Imagick::RESOLUTION_PIXELSPERCENTIMETER,
-            $imagick->getImageUnits()
-        );
-        $this->assertSame(
-            ['x' => 118.11023622, 'y' => 118.11023622],
-            $imagick->getImageResolution()
-        );
     }
 
     public function testAddLayerImage()

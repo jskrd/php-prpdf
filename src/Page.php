@@ -7,16 +7,27 @@ use ImagickPixel;
 
 final class Page
 {
+    private $document;
+
     private $image;
 
     public function __construct(Document $document)
     {
-        $width = $document->getBleedBoxResolutionX();
-        $height = $document->getBleedBoxResolutionY();
-        $dpcm = $document->getDotsPerCentimeter();
+        $this->document = $document;
+        $this->document->addPage($this);
 
         $this->image = new Imagick();
+        $this->image->newImage(
+            $this->document->getBleedBoxResolutionX(),
+            $this->document->getBleedBoxResolutionY(),
+            new ImagickPixel('#FF00FF')
+        );
         $this->image->setImageFormat('png');
+    }
+
+    public function getDocument(): Document
+    {
+        return $this->document;
     }
 
     public function getImage(): Imagick

@@ -133,8 +133,6 @@ class DocumentTest extends TestCase
 
         $page = new Page($document);
 
-        $document->addPage($page);
-
         $this->assertSame([$page], $document->getPages());
     }
 }
