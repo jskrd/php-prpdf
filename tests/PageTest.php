@@ -47,6 +47,23 @@ class PageTest extends TestCase
         $this->assertSame(3579, $page->getImageHeight());
     }
 
+    public function testAddLayerImage()
+    {
+        $document = new Document(105, 148, 118.11023622);
+
+        $background = file_get_contents(__DIR__ . '/assets/background.png');
+        $border = file_get_contents(__DIR__ . '/assets/border.png');
+
+        $page = (new Page($document))
+            ->addImageLayer($background)
+            ->addImageLayer($border);
+
+        $this->assertSame(
+            '65a3a68ba6f475abc4855152a33518f099908d1eb3cf4f37a4447b307001cf7d',
+            hash('sha256', $page->render())
+        );
+    }
+
     public function testRender()
     {
         $document = new Document(105, 148, 118.11023622);

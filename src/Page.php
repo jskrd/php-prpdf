@@ -36,6 +36,16 @@ final class Page
         return $this->image->getImageHeight();
     }
 
+    public function addImageLayer(string $image): Page
+    {
+        $imagick = new Imagick();
+        $imagick->readImageBlob($image);
+
+        $this->image->addImage($imagick);
+
+        return $this;
+    }
+
     public function render(): string
     {
         $imagick = $this->image->mergeImageLayers(Imagick::LAYERMETHOD_FLATTEN);
