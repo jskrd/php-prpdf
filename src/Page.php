@@ -36,6 +36,15 @@ final class Page
         return $this->image->getImageHeight();
     }
 
+    public function render(): string
+    {
+        $imagick = $this->image->mergeImageLayers(Imagick::LAYERMETHOD_FLATTEN);
+        $imagick->setImageFormat('png');
+        $imagick->stripImage();
+
+        return $imagick->getImageBlob();
+    }
+
     public static function millimeterToCentimeter(float $mm): float
     {
         return round($mm * .1, 8);

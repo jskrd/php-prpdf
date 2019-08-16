@@ -47,6 +47,18 @@ class PageTest extends TestCase
         $this->assertSame(3579, $page->getImageHeight());
     }
 
+    public function testRender()
+    {
+        $document = new Document(105, 148, 118.11023622);
+
+        $page = new Page($document);
+
+        $this->assertSame(
+            '4a4e4fcde45556f889e67d039013542e8a0f500dd89b608a0b6e8f11565b39ed',
+            hash('sha256', $page->render())
+        );
+    }
+
     public function testMillimeterToCentimeter()
     {
         $this->assertSame(.1, Page::millimeterToCentimeter(1));
