@@ -41,7 +41,7 @@ class PageTest extends TestCase
             ->addImageLayer($border);
 
         $this->assertSame(
-            '65a3a68ba6f475abc4855152a33518f099908d1eb3cf4f37a4447b307001cf7d',
+            'c3ac3a44a893d742f946f4508397cdeb2733715e0d4cece696c430f37c14030e',
             hash('sha256', $page->render())
         );
     }
@@ -53,7 +53,7 @@ class PageTest extends TestCase
         $page = new Page($document);
 
         $this->assertSame(
-            '4a4e4fcde45556f889e67d039013542e8a0f500dd89b608a0b6e8f11565b39ed',
+            'ae17bb8b4112571ac679a5c62fbeb1aa9a479d6643d271d09ea7eb2144437c6e',
             hash('sha256', $page->render())
         );
     }
