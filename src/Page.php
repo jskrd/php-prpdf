@@ -49,6 +49,33 @@ final class Page
         return $this;
     }
 
+    public function cropImageBleed(
+        bool $top = true,
+        bool $right = true,
+        bool $bottom = true,
+        bool $left = true
+    ): Page {
+        $bleedSize = self::millimeterToPixel(
+            $this->document->getBleedSize() * 2,
+            $this->document->getDotsPerCentimeter()
+        );
+        $bleedSize /= 2;
+
+        $width  = $this->image->getImageWidth();
+        $height = $this->image->getImageHeight();
+        $x      = 0;
+        $y      = 0;
+
+        $x      += $left ? $bleedSize : 0;
+        $y      += $top ? $bleedSize : 0;
+        $width  -= $right ? $bleedSize + $x : 0;
+        $height -= $bottom ? $bleedSize + $y : 0;
+
+        $this->image->cropImage($width, $height, $x, $y);
+
+        return $this;
+    }
+
     public function render(): string
     {
         $this->image->stripImage();
