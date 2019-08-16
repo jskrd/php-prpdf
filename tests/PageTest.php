@@ -11,14 +11,14 @@ class PageTest extends TestCase
 {
     public function testGetImage()
     {
-        $document = new Document(210, 297, 118.11023622);
+        $document = new Document(105, 148, 118.11023622);
 
         $page = new Page($document);
 
         $imagick = $page->getImage();
 
-        $this->assertSame(2551, $imagick->getImageWidth());
-        $this->assertSame(3579, $imagick->getImageHeight());
+        $this->assertSame(1311, $imagick->getImageWidth());
+        $this->assertSame(1819, $imagick->getImageHeight());
         $this->assertSame(
             Imagick::RESOLUTION_PIXELSPERCENTIMETER,
             $imagick->getImageUnits()
