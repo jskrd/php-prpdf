@@ -74,15 +74,17 @@ final class Document
 
     public function getBleedBoxResolutionX(): int
     {
-        return round(
-            $this->getBleedBoxWidth() * $this->getDotsPerMillimeter()
+        return self::millimeterToPixel(
+            $this->getBleedBoxWidth(),
+            $this->getDotsPerCentimeter()
         );
     }
 
     public function getBleedBoxResolutionY(): int
     {
-        return round(
-            $this->getBleedBoxHeight() * $this->getDotsPerMillimeter()
+        return self::millimeterToPixel(
+            $this->getBleedBoxHeight(),
+            $this->getDotsPerCentimeter()
         );
     }
 
