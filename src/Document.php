@@ -25,19 +25,19 @@ final class Document
 
     private $pages = [];
 
-    public function __construct(int $pageWidth, int $pageHeight, float $dpcm)
+    public function __construct(float $pageWidth, float $pageHeight, float $dpcm)
     {
         $this->pageWidth = $pageWidth;
         $this->pageHeight = $pageHeight;
         $this->dotsPerCentimeter = $dpcm;
     }
 
-    public function getPageWidth(): int
+    public function getPageWidth(): float
     {
         return $this->pageWidth;
     }
 
-    public function getPageHeight(): int
+    public function getPageHeight(): float
     {
         return $this->pageHeight;
     }

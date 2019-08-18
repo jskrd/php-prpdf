@@ -12,14 +12,14 @@ class DocumentTest extends TestCase
     {
         $document = new Document(210, 297, 118.11023622);
 
-        $this->assertSame(210, $document->getPageWidth());
+        $this->assertSame(210.0, $document->getPageWidth());
     }
 
     public function testGetPageHeight()
     {
         $document = new Document(210, 297, 118.11023622);
 
-        $this->assertSame(297, $document->getPageHeight());
+        $this->assertSame(297.0, $document->getPageHeight());
     }
 
     public function testGetDotsPerCentimeter()
