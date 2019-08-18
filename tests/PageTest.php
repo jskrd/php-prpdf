@@ -6,7 +6,6 @@ use Imagick;
 use ImagickPixel;
 use Jskrd\PrintReadyPDF\Document;
 use Jskrd\PrintReadyPDF\Page;
-use PHPUnit\Framework\TestCase;
 
 class PageTest extends TestCase
 {

@@ -4,7 +4,6 @@ namespace Tests;
 
 use Jskrd\PrintReadyPDF\Document;
 use Jskrd\PrintReadyPDF\Page;
-use PHPUnit\Framework\TestCase;
 
 class DocumentTest extends TestCase
 {
