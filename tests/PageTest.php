@@ -3,174 +3,121 @@
 namespace Tests;
 
 use Imagick;
+use ImagickPixel;
 use Jskrd\PrintReadyPDF\Document;
 use Jskrd\PrintReadyPDF\Page;
 use PHPUnit\Framework\TestCase;
 
 class PageTest extends TestCase
 {
-    public function testGetDocument()
+    public function testGetImages()
     {
-        $document = new Document(105, 148, 118.11023622);
+        $page = new Page;
 
-        $page = new Page($document);
-
-        $this->assertSame($document, $page->getDocument());
+        $this->assertSame([], $page->getImages());
     }
 
-    public function testGetImage()
+    public function testAddImage()
     {
-        $document = new Document(105, 148, 118.11023622);
+        $image = $this->makeImage(1311, 1819, '#FFFFFF');
 
-        $page = new Page($document);
+        $page = (new Page)->addImage($image);
 
-        $imagick = $page->getImage();
+        $this->assertSame([$image], $page->getImages());
+    }
+
+    public function testRenderSingle()
+    {
+        $page = (new Page)->addImage($this->makeImage(1311, 1819, '#FFAAAA'));
+
+        $imagick = new Imagick();
+        $imagick->readImageBlob($page->render());
 
         $this->assertSame(1311, $imagick->getImageWidth());
         $this->assertSame(1819, $imagick->getImageHeight());
+        $this->assertSame(
+            ['r' => 255, 'g' => 170, 'b' => 170, 'a' => 1],
+            $imagick->getImagePixelColor(0, 0)->getColor()
+        );
+        $this->assertSame(
+            ['r' => 255, 'g' => 170, 'b' => 170, 'a' => 1],
+            $imagick->getImagePixelColor(1310, 1818)->getColor()
+        );
     }
 
-    // public function testAddLayerImage()
-    // {
-    //     $document = new Document(105, 148, 118.11023622);
+    public function testRenderDouble()
+    {
+        $page = (new Page)
+            ->addImage($this->makeImage(1276, 1819, '#AAFFAA'))
+            ->addImage($this->makeImage(1276, 1819, '#FFAAAA'));
 
-    //     $background = file_get_contents(__DIR__ . '/assets/background.png');
-    //     $border = file_get_contents(__DIR__ . '/assets/border.png');
+        $imagick = new Imagick();
+        $imagick->readImageBlob($page->render());
 
-    //     $page = (new Page($document))
-    //         ->addImageLayer($background)
-    //         ->addImageLayer($border);
+        $this->assertSame(2552, $imagick->getImageWidth());
+        $this->assertSame(1819, $imagick->getImageHeight());
+        $this->assertSame(
+            ['r' => 170, 'g' => 255, 'b' => 170, 'a' => 1],
+            $imagick->getImagePixelColor(0, 0)->getColor()
+        );
+        $this->assertSame(
+            ['r' => 170, 'g' => 255, 'b' => 170, 'a' => 1],
+            $imagick->getImagePixelColor(1275, 1818)->getColor()
+        );
+        $this->assertSame(
+            ['r' => 255, 'g' => 170, 'b' => 170, 'a' => 1],
+            $imagick->getImagePixelColor(1276, 0)->getColor()
+        );
+        $this->assertSame(
+            ['r' => 255, 'g' => 170, 'b' => 170, 'a' => 1],
+            $imagick->getImagePixelColor(2551, 1818)->getColor()
+        );
+    }
 
-    //     $this->assertSame(
-    //         'c3ac3a44a893d742f946f4508397cdeb2733715e0d4cece696c430f37c14030e',
-    //         hash('sha256', $page->render())
-    //     );
-    // }
+    public function testRenderSpine()
+    {
+        $page = (new Page)
+            ->addImage($this->makeImage(1276, 1819, '#AAFFAA'))
+            ->addImage($this->makeImage(118, 1819, '#AAAAFF'))
+            ->addImage($this->makeImage(1276, 1819, '#FFAAAA'));
 
-    // public function testRender()
-    // {
-    //     $document = new Document(105, 148, 118.11023622);
+        $imagick = new Imagick();
+        $imagick->readImageBlob($page->render());
 
-    //     $page = new Page($document);
+        $this->assertSame(2670, $imagick->getImageWidth());
+        $this->assertSame(1819, $imagick->getImageHeight());
+        $this->assertSame(
+            ['r' => 170, 'g' => 255, 'b' => 170, 'a' => 1],
+            $imagick->getImagePixelColor(0, 0)->getColor()
+        );
+        $this->assertSame(
+            ['r' => 170, 'g' => 255, 'b' => 170, 'a' => 1],
+            $imagick->getImagePixelColor(1275, 1818)->getColor()
+        );
+        $this->assertSame(
+            ['r' => 170, 'g' => 170, 'b' => 255, 'a' => 1],
+            $imagick->getImagePixelColor(1276, 0)->getColor()
+        );
+        $this->assertSame(
+            ['r' => 170, 'g' => 170, 'b' => 255, 'a' => 1],
+            $imagick->getImagePixelColor(1393, 1818)->getColor()
+        );
+        $this->assertSame(
+            ['r' => 255, 'g' => 170, 'b' => 170, 'a' => 1],
+            $imagick->getImagePixelColor(1394, 0)->getColor()
+        );
+        $this->assertSame(
+            ['r' => 255, 'g' => 170, 'b' => 170, 'a' => 1],
+            $imagick->getImagePixelColor(2669, 1818)->getColor()
+        );
+    }
 
-    //     $this->assertSame(
-    //         'ae17bb8b4112571ac679a5c62fbeb1aa9a479d6643d271d09ea7eb2144437c6e',
-    //         hash('sha256', $page->render())
-    //     );
-    // }
+    private function makeImage(int $width, int $height, string $color): string
+    {
+        $imagick = new Imagick();
+        $imagick->newImage($width, $height, new ImagickPixel($color));
+        $imagick->setImageFormat('png');
 
-    // public function testCropImageBleed()
-    // {
-    //     $document = new Document(105, 148, 118.11023622);
-
-    //     $background = file_get_contents(__DIR__ . '/assets/background.png');
-    //     $border = file_get_contents(__DIR__ . '/assets/border.png');
-
-    //     $page = (new Page($document))
-    //         ->addImageLayer($background)
-    //         ->addImageLayer($border)
-    //         ->cropImageBleed();
-
-    //     $imagick = $page->getImage();
-
-    //     $this->assertSame(1240, $imagick->getImageWidth());
-    //     $this->assertSame(1748, $imagick->getImageHeight());
-
-    //     $this->assertSame(
-    //         'fc974552f34742541a91b1fade0212d99f2e534e06c7f0b4aeed8d402dac6f83',
-    //         hash('sha256', $page->render())
-    //     );
-    // }
-
-    // public function testCropImageBleedOnlyTop()
-    // {
-    //     $document = new Document(105, 148, 118.11023622);
-
-    //     $background = file_get_contents(__DIR__ . '/assets/background.png');
-    //     $border = file_get_contents(__DIR__ . '/assets/border.png');
-
-    //     $page = (new Page($document))
-    //         ->addImageLayer($background)
-    //         ->addImageLayer($border)
-    //         ->cropImageBleed(true, false, false, false);
-
-    //     $imagick = $page->getImage();
-
-    //     $this->assertSame(1311, $imagick->getImageWidth());
-    //     $this->assertSame(1784, $imagick->getImageHeight());
-
-    //     $this->assertSame(
-    //         'f8571785ae2b822dfb9ea388f27f5e8b6d67fb94d0b54bc31fc1581f1364bcbe',
-    //         hash('sha256', $page->render())
-    //     );
-    // }
-
-    // public function testCropImageBleedOnlyRight()
-    // {
-    //     $document = new Document(105, 148, 118.11023622);
-
-    //     $background = file_get_contents(__DIR__ . '/assets/background.png');
-    //     $border = file_get_contents(__DIR__ . '/assets/border.png');
-
-    //     $page = (new Page($document))
-    //         ->addImageLayer($background)
-    //         ->addImageLayer($border)
-    //         ->cropImageBleed(false, true, false, false);
-
-    //     $imagick = $page->getImage();
-
-    //     $this->assertSame(1275, $imagick->getImageWidth());
-    //     $this->assertSame(1819, $imagick->getImageHeight());
-
-    //     $this->assertSame(
-    //         'cb6d266e91a10c6809685ad71f857269cbc72f40990ea318a71e63e95a737941',
-    //         hash('sha256', $page->render())
-    //     );
-    // }
-
-    // public function testCropImageBleedOnlyBottom()
-    // {
-    //     $document = new Document(105, 148, 118.11023622);
-
-    //     $background = file_get_contents(__DIR__ . '/assets/background.png');
-    //     $border = file_get_contents(__DIR__ . '/assets/border.png');
-
-    //     $page = (new Page($document))
-    //         ->addImageLayer($background)
-    //         ->addImageLayer($border)
-    //         ->cropImageBleed(false, false, true, false);
-
-    //     $imagick = $page->getImage();
-
-    //     $this->assertSame(1311, $imagick->getImageWidth());
-    //     $this->assertSame(1783, $imagick->getImageHeight());
-
-    //     $this->assertSame(
-    //         'b6089596680020f52f786469c98d79843b09f529a98ae123df52dae7d0e5de5b',
-    //         hash('sha256', $page->render())
-    //     );
-    // }
-
-    // public function testCropImageBleedOnlyLeft()
-    // {
-    //     $document = new Document(105, 148, 118.11023622);
-
-    //     $background = file_get_contents(__DIR__ . '/assets/background.png');
-    //     $border = file_get_contents(__DIR__ . '/assets/border.png');
-
-    //     $page = (new Page($document))
-    //         ->addImageLayer($background)
-    //         ->addImageLayer($border)
-    //         ->cropImageBleed(false, false, false, true);
-
-    //     $imagick = $page->getImage();
-
-    //     $this->assertSame(1276, $imagick->getImageWidth());
-    //     $this->assertSame(1819, $imagick->getImageHeight());
-
-    //     $this->assertSame(
-    //         'df8fe9809c5029a233b24d831d11b4266331cac0b3af02289cda3a0504029451',
-    //         hash('sha256', $page->render())
-    //     );
-    // }
+        return $imagick->getImageBlob();
+    }
 }
