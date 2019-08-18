@@ -49,12 +49,12 @@ final class Document
 
     public function getDotsPerMillimeter(): float
     {
-        return round($this->dotsPerCentimeter / 10, 8);
+        return round($this->getDotsPerCentimeter() * .1, 8);
     }
 
     public function getDotsPerInch(): float
     {
-        return round($this->dotsPerCentimeter * 2.54, 8);
+        return round($this->getDotsPerCentimeter() * 2.54, 8);
     }
 
     public function getBleedSize(): float
@@ -79,30 +79,30 @@ final class Document
 
     public function getSlugSize(): int
     {
-        $cropMarks = $this->cropMarksOffset + $this->cropMarksLength;
-        $bleed = $this->bleedSize;
+        $cropMarks = $this->getCropMarksOffset() + $this->getCropMarksLength();
+        $bleed = $this->getBleedSize();
 
         return ceil($cropMarks > $bleed ? $cropMarks : $bleed);
     }
 
     public function getPaperWidth(): int
     {
-        return $this->pageWidth + $this->getSlugSize() * 2;
+        return $this->getPageWidth() + $this->getSlugSize() * 2;
     }
 
     public function getPaperHeight(): int
     {
-        return $this->pageHeight + $this->getSlugSize() * 2;
+        return $this->getPageHeight() + $this->getSlugSize() * 2;
     }
 
     public function getBleedBoxWidth(): float
     {
-        return $this->pageWidth + $this->bleedSize * 2;
+        return $this->getPageWidth() + $this->getBleedSize() * 2;
     }
 
     public function getBleedBoxHeight(): float
     {
-        return $this->pageHeight + $this->bleedSize * 2;
+        return $this->getPageHeight() + $this->getBleedSize() * 2;
     }
 
     public function getBleedBoxResolutionX(): int
@@ -134,7 +134,7 @@ final class Document
     public function render(): string
     {
         $images = [];
-        foreach ($this->pages as $page)
+        foreach ($this->getPages() as $page)
             $images[] = base64_encode($page->render());
 
         $twig = new Environment(new FilesystemLoader(__DIR__ . '/Templates'));
@@ -147,9 +147,9 @@ final class Document
                 'pageHeight' => $this->getPageHeight(),
                 'paperWidth' => $this->getPaperWidth(),
                 'paperHeight' => $this->getPaperHeight(),
-                'cropMarksLength' => $this->cropMarksLength,
-                'cropMarksWeight' => $this->cropMarksWeight,
-                'cropMarksOffset' => $this->cropMarksOffset,
+                'cropMarksLength' => $this->getCropMarksLength(),
+                'cropMarksWeight' => $this->getCropMarksWeight(),
+                'cropMarksOffset' => $this->getCropMarksOffset(),
                 'images' => $images
             ])
         );
