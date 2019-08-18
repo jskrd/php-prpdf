@@ -4,6 +4,7 @@ namespace Jskrd\PrintReadyPDF;
 
 use Imagick;
 use ImagickPixel;
+use Jskrd\PrintReadyPDF\Document;
 
 final class Page
 {
@@ -55,7 +56,7 @@ final class Page
         bool $bottom = true,
         bool $left = true
     ): Page {
-        $bleedSize = self::millimeterToPixel(
+        $bleedSize = Document::millimeterToPixel(
             $this->document->getBleedSize() * 2,
             $this->document->getDotsPerCentimeter()
         );
