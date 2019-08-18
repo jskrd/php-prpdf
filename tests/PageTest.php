@@ -3,7 +3,6 @@
 namespace Tests;
 
 use Imagick;
-use ImagickPixel;
 use Jskrd\PrintReadyPDF\Document;
 use Jskrd\PrintReadyPDF\Page;
 
@@ -109,14 +108,5 @@ class PageTest extends TestCase
             ['r' => 255, 'g' => 170, 'b' => 170, 'a' => 1],
             $imagick->getImagePixelColor(2669, 1818)->getColor()
         );
-    }
-
-    private function makeImage(int $width, int $height, string $color): string
-    {
-        $imagick = new Imagick();
-        $imagick->newImage($width, $height, new ImagickPixel($color));
-        $imagick->setImageFormat('png');
-
-        return $imagick->getImageBlob();
     }
 }
