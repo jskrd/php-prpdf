@@ -129,9 +129,10 @@ class DocumentTest extends TestCase
 
     public function testAddPage()
     {
-        $document = new Document(210, 297, 118.11023622);
+        $page = new Page;
 
-        $page = new Page($document);
+        $document = new Document(210, 297, 118.11023622);
+        $document->addPage($page);
 
         $this->assertSame([$page], $document->getPages());
     }
