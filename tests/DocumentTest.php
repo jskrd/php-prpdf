@@ -135,4 +135,49 @@ class DocumentTest extends TestCase
 
         $this->assertSame([$page], $document->getPages());
     }
+
+    public function testMillimeterToCentimeter()
+    {
+        $this->assertSame(.1, Document::millimeterToCentimeter(1));
+    }
+
+    public function testMillimeterToInch()
+    {
+        $this->assertSame(.0393701, Document::millimeterToInch(1));
+    }
+
+    public function testMillimeterToPixel()
+    {
+        $this->assertSame(12, Document::millimeterToPixel(1, 118.11023622));
+    }
+
+    public function testCentimeterToMillimeter()
+    {
+        $this->assertSame(10.0, Document::centimeterToMillimeter(1));
+    }
+
+    public function testCentimeterToInch()
+    {
+        $this->assertSame(0.393701, Document::centimeterToInch(1));
+    }
+
+    public function testCentimeterToPixel()
+    {
+        $this->assertSame(118, Document::centimeterToPixel(1, 118.11023622));
+    }
+
+    public function testInchToMillimeter()
+    {
+        $this->assertSame(25.4, Document::inchToMillimeter(1));
+    }
+
+    public function testInchToCentimeter()
+    {
+        $this->assertSame(2.54, Document::inchToCentimeter(1));
+    }
+
+    public function testInchToPixel()
+    {
+        $this->assertSame(300, Document::inchToPixel(1, 118.11023622));
+    }
 }
