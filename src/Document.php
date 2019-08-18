@@ -62,6 +62,30 @@ final class Document
         return $this->bleedSize;
     }
 
+    public function getBleedBoxWidth(): float
+    {
+        return $this->getPageWidth() + $this->getBleedSize() * 2;
+    }
+
+    public function getBleedBoxHeight(): float
+    {
+        return $this->getPageHeight() + $this->getBleedSize() * 2;
+    }
+
+    public function getBleedBoxResolutionX(): int
+    {
+        return round(
+            $this->getBleedBoxWidth() * $this->getDotsPerMillimeter()
+        );
+    }
+
+    public function getBleedBoxResolutionY(): int
+    {
+        return round(
+            $this->getBleedBoxHeight() * $this->getDotsPerMillimeter()
+        );
+    }
+
     public function getCropMarksLength(): float
     {
         return $this->cropMarksLength;
@@ -93,30 +117,6 @@ final class Document
     public function getPaperHeight(): int
     {
         return $this->getPageHeight() + $this->getSlugSize() * 2;
-    }
-
-    public function getBleedBoxWidth(): float
-    {
-        return $this->getPageWidth() + $this->getBleedSize() * 2;
-    }
-
-    public function getBleedBoxHeight(): float
-    {
-        return $this->getPageHeight() + $this->getBleedSize() * 2;
-    }
-
-    public function getBleedBoxResolutionX(): int
-    {
-        return round(
-            $this->getBleedBoxWidth() * $this->getDotsPerMillimeter()
-        );
-    }
-
-    public function getBleedBoxResolutionY(): int
-    {
-        return round(
-            $this->getBleedBoxHeight() * $this->getDotsPerMillimeter()
-        );
     }
 
     public function getPages(): array
