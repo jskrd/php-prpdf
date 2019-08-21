@@ -7,7 +7,9 @@ php:
   - 7.2
   - 7.3
 
-before_install: yes | pecl install imagick
+before_install:
+  - pecl channel-update pecl.php.net
+  - yes | pecl install imagick
 
 install: composer install
 
