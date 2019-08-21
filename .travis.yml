@@ -11,4 +11,4 @@ before_install: printf "\n" | pecl install imagick
 
 install: composer install
 
-script: phpunit
+script: vendor/bin/phpunit --verbose
