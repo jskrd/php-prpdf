@@ -7,7 +7,9 @@ php:
   - 7.2
   - 7.3
 
-before_install: printf "\n" | pecl install imagick
+before_install:
+  - printf "\n" | pecl install imagick
+  - php -m
 
 install: composer install
 
