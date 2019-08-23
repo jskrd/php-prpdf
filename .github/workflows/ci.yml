@@ -15,3 +15,5 @@ jobs:
         run: composer install
       - name: Run unit tests
         run: php${{ matrix.php }} vendor/bin/phpunit --verbose
+      - name: Check coding style
+        run: php${{ matrix.php }} vendor/bin/phpcs --standard=PSR12 src/
