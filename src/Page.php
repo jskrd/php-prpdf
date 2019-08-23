@@ -25,8 +25,9 @@ final class Page
     {
         $imagick = new Imagick();
 
-        foreach ($this->getImages() as $image)
+        foreach ($this->getImages() as $image) {
             $imagick->readImageBlob($image);
+        }
 
         $imagick->resetIterator();
         $spread = $imagick->appendImages(false);

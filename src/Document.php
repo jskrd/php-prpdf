@@ -139,8 +139,9 @@ final class Document
     public function render(): string
     {
         $images = [];
-        foreach ($this->getPages() as $page)
+        foreach ($this->getPages() as $page) {
             $images[] = base64_encode($page->render());
+        }
 
         $twig = new Environment(new FilesystemLoader(__DIR__ . '/Templates'));
 
