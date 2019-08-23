@@ -7,5 +7,6 @@ jobs:
         php: ['7.1', '7.2', '7.3']
     steps:
       - uses: actions/checkout@master
-      - run: composer install --ignore-platform-reqs
+      - run: sudo apt-get install php${{ matrix.php }}-imagick
+      - run: composer install
       - run: php${{ matrix.php }} vendor/bin/phpunit --verbose
