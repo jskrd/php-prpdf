@@ -4,5 +4,5 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@master
-      - run: pecl install imagick
+      - run: apt install php-imagick
       - run: composer install
