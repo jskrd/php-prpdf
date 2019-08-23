@@ -8,4 +8,4 @@ jobs:
     steps:
       - uses: actions/checkout@master
       - run: composer install --ignore-platform-reqs
-      - run: php${{ matrix.php }} --version
+      - run: php${{ matrix.php }} vendor/bin/phpunit --verbose
