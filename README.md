@@ -9,4 +9,4 @@
 
 ## About
 
-This library, written in PHP, provides a set of classes for cleanly building print ready PDF files.
+This library provides a set of classes for cleanly building print ready PDF files.
