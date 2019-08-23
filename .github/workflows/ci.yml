@@ -2,9 +2,10 @@ on: push
 jobs:
   test:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        php: ['7.1', '7.2', '7.3']
     steps:
       - uses: actions/checkout@master
       - run: composer install --ignore-platform-reqs
-      - run: php7.1 --version
-      - run: php7.2 --version
-      - run: php7.3 --version
+      - run: php${{ matrix.php }} --version
