@@ -9,4 +9,4 @@
 
 ## About
 
-This library provides a set of classes for cleanly building print ready PDF files.
+A set of classes for cleanly building print ready PDF files.

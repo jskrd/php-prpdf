@@ -1,6 +1,6 @@
 {
     "name": "jskrd/php-prpdf",
-    "description": "This library provides a set of classes for cleanly building print ready PDF files.",
+    "description": "A set of classes for cleanly building print ready PDF files.",
     "license": "MIT",
     "require": {
         "php": "^7.1",
