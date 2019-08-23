@@ -6,3 +6,4 @@ jobs:
       - uses: actions/checkout@master
       - run: sudo apt-get install php-imagick
       - run: composer install
+      - run: vendor/bin/phpunit
