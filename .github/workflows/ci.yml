@@ -1,0 +1,9 @@
+on: push
+jobs:
+  build:
+    container:
+      image: composer:latest
+      volumes:
+        - .:/app
+    steps:
+      run: composer install
