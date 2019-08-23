@@ -4,4 +4,5 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@master
+      - run: pecl install imagick
       - run: composer install
