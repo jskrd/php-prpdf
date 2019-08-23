@@ -4,8 +4,4 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@master
-      - run: sudo apt-get install php-imagick
-      - uses: docker://composer:latest install --ignore-platform-reqs
-        with:
-          args: --volume .:/app
-      - run: vendor/bin/phpunit
+      - run: composer install --ignore-platform-reqs
