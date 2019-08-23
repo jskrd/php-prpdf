@@ -2,9 +2,6 @@ on: push
 jobs:
   build:
     runs-on: ubuntu-latest
-    container:
-      image: composer:latest
-      volumes:
-        - .:/app
     steps:
+      - uses: docker://composer:latest
       - run: composer install
