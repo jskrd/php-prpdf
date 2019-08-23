@@ -1,7 +1,8 @@
 on: push
 jobs:
-  build:
+  test:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@master
       - run: composer install --ignore-platform-reqs
+      - run: docker ps -a
