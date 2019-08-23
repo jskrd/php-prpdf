@@ -8,5 +8,6 @@ jobs:
     steps:
       - uses: actions/checkout@master
       - run: sudo apt-get install php${{ matrix.php }}-imagick
+      - run: php${{ matrix.php }} -m
       - run: composer install
       - run: php${{ matrix.php }} vendor/bin/phpunit --verbose
