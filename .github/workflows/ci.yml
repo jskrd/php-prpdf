@@ -9,7 +9,7 @@ jobs:
         php: ['7.1', '7.2', '7.3']
     steps:
       - uses: actions/checkout@master
-      - name: Install required PHP extensions
+      - name: Install PHP extensions
         run: sudo apt-get install php${{ matrix.php }}-imagick
       - name: Install Composer dependencies
         run: composer install
