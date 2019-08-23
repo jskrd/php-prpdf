@@ -5,4 +5,6 @@ jobs:
     steps:
       - uses: actions/checkout@master
       - run: composer install --ignore-platform-reqs
-      - run: docker ps -a
+      - run: php7.1 --version
+      - run: php7.2 --version
+      - run: php7.3 --version
