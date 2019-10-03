@@ -49,6 +49,14 @@ class DocumentTest extends TestCase
         $this->assertSame(3.0, $document->getBleedSize());
     }
 
+    public function testSetBleedSize()
+    {
+        $document = (new Document(210, 297, 118.11023622))
+            ->setBleedSize(20);
+
+        $this->assertSame(20.0, $document->getBleedSize());
+    }
+
     public function testGetCropMarksLength()
     {
         $document = new Document(210, 297, 118.11023622);

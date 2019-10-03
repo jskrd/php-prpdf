@@ -65,6 +65,13 @@ final class Document
         return $this->bleedSize;
     }
 
+    public function setBleedSize(float $bleedSize): Document
+    {
+        $this->bleedSize = $bleedSize;
+
+        return $this;
+    }
+
     public function getBleedBoxWidth(): float
     {
         return $this->getPageWidth() + $this->getBleedSize() * 2;
