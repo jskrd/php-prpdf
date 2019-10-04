@@ -80,7 +80,7 @@
     </head>
     <body>
         {%- for image in images -%}
-            <div class="page" style="background-image: url('data:image/jpeg;base64,{{ image }}');">
+            <div class="page" style="background-image: url('{{ image['tmpfile_path'] }}');">
                 <div class="crop-mark crop-mark-top-left"></div>
                 <div class="crop-mark crop-mark-top-right"></div>
                 <div class="crop-mark crop-mark-right-top"></div>

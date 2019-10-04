@@ -137,7 +137,13 @@ final class Document
     {
         $images = [];
         foreach ($this->getPages() as $page) {
-            $images[] = base64_encode($page->render());
+            $tmpfile = tmpfile();
+            fwrite($tmpfile, $page->render());
+
+            $images[] = [
+                'tmpfile' => $tmpfile,
+                'tmpfile_path' => stream_get_meta_data($tmpfile)['uri']
+            ];
         }
 
         $twig = new Environment(new FilesystemLoader(__DIR__ . '/Templates'));
@@ -156,6 +162,10 @@ final class Document
             ])
         );
         $dompdf->render();
+
+        foreach ($images as $image) {
+            fclose($image['tmpfile']);
+        }
 
         return $dompdf->output();
     }
