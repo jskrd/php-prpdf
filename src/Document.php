@@ -21,8 +21,6 @@ final class Document
 
     private $cropMarksWeight = .1; // mm
 
-    private $cropMarksOffset = 2; // mm
-
     private $pages = [];
 
     public function __construct(
@@ -108,17 +106,9 @@ final class Document
         return $this->cropMarksWeight;
     }
 
-    public function getCropMarksOffset(): float
-    {
-        return $this->cropMarksOffset;
-    }
-
     public function getSlugSize(): int
     {
-        $cropMarks = $this->getCropMarksOffset() + $this->getCropMarksLength();
-        $bleed = $this->getBleedSize();
-
-        return ceil($cropMarks > $bleed ? $cropMarks : $bleed);
+        return ceil($this->getBleedSize() + $this->getCropMarksLength() - 1);
     }
 
     public function getPaperWidth(): int
@@ -162,7 +152,6 @@ final class Document
                 'paperHeight' => $this->getPaperHeight(),
                 'cropMarksLength' => $this->getCropMarksLength(),
                 'cropMarksWeight' => $this->getCropMarksWeight(),
-                'cropMarksOffset' => $this->getCropMarksOffset(),
                 'images' => $images
             ])
         );

@@ -71,18 +71,15 @@ class DocumentTest extends TestCase
         $this->assertSame(.1, $document->getCropMarksWeight());
     }
 
-    public function testGetCropMarksOffset()
-    {
-        $document = new Document(210, 297, 118.11023622);
-
-        $this->assertSame(2.0, $document->getCropMarksOffset());
-    }
-
     public function testGetSlugSize()
     {
         $document = new Document(210, 297, 118.11023622);
 
         $this->assertSame(7, $document->getSlugSize());
+
+        $document->setBleedSize(20);
+
+        $this->assertSame(24, $document->getSlugSize());
     }
 
     public function testGetPaperWidth()
